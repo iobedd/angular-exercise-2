@@ -1,0 +1,171 @@
+<div class="page1">
+
+  <h2>PRODUCTS TABLE</h2>
+
+  <div class="searchbar">
+    <input #searchInput type="text" placeholder="Search.." [(ngModel)]="searchKeyword">
+    <button class="primary" type="button" (click)="searchProducts(searchInput.value)">SUBMIT</button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Descriere</th>
+        <th>Ratings</th>
+        <th>Created On</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of filteredProducts">
+        <td> {{ product.id }} </td>
+        <td>{{ product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.ratings}}</td>
+        <td>{{product.createdOn}}</td>
+        <td>
+          <button (click)="toggleProductUpdateForm(product)">Edit</button>
+          <button (click)="deleteProduct(product.id)"> DELETE</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="toggleProductForm()">Create Product Form</button>
+  <div *ngIf="showProductForm">
+    <h2>Product Form</h2>
+    <form (ngSubmit)="createProduct()">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Product name.." [(ngModel)]="product.name" required>
+        <br>
+        <label for="name">Description</label>
+        <input type="text" name="name" id="name" placeholder="Description.." [(ngModel)]="product.description" required>
+        <br>
+        <!-- <label for="name">Ratings</label>
+        <input type="text" name="name" id="name" placeholder="Product rating(1-5).." [(ngModel)]="product.ratings">
+        <br> -->
+        <label for="name">Ratings</label>
+        <input type="text" name="name" id="name" placeholder="Product rating(1-5).." [(ngModel)]="ratingstemp">
+        <br>
+      </div>
+      <button type="submit" (click)="getAllProducts">Create Product</button>
+    </form>
+  </div>
+
+  <button class="asc-btn" (click)="orderProductsAsc()">ASCENDING</button>
+  <button class="des-btn" (click)="orderProductsDes()">DESCENDING</button>
+
+  <div *ngIf="showUpdateProductForm" class="updateform">
+    <form (ngSubmit)="updateProduct(producttemp)">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="New name.." [(ngModel)]="producttemp.name"
+          [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+        <label for="name">Description</label>
+        <input type="text" name="name" id="name" placeholder="New description.." [(ngModel)]="producttemp.description"
+          [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+        <label for="name">Ratings</label>
+        <!-- <input type="text" name="name" id="name" placeholder="New ratings(values: 1-5).." [(ngModel)]="producttemp.ratings" [ngModelOptions]=" 
+        {standalone: true}"> -->
+        <input type="text" name="name" id="name" placeholder="New ratings(values: 1-5).." [(ngModel)]="ratingstemp" [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+      </div>
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</div>
+
+<div class="page2">
+  <h2>STORES TABLE</h2>
+  <table class="table2">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Country</th>
+        <th>City</th>
+        <th>MonthlyIncome On</th>
+        <th>Owner Name</th>
+        <th>Active Since</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let store of stores">
+        <td> {{ store.id }} </td>
+        <td>{{ store.name}}</td>
+        <td>{{store.country}}</td>
+        <td>{{store.city}}</td>
+        <td>{{store.monthlyIncome}}</td>
+        <td>{{store.ownerName}}</td>
+        <td>{{store.activeSince}}</td>
+        <td>
+          <button (click)="toggleStoreUpdateForm(store)">Edit</button>
+          <button (click)="deleteStore(store.id)"> DELETE</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="toggleStoreForm()">Create Store Form</button>
+  <div *ngIf="showStoreForm">
+    <h2>Store Form</h2>
+    <form (ngSubmit)="createStore()">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" [(ngModel)]="store.name" required>
+        <br>
+        <label for="name">City</label>
+        <input type="text" name="name" id="name" [(ngModel)]="store.city" required>
+        <br>
+        <label for="name">Country</label>
+        <input type="text" name="name" id="name" [(ngModel)]="store.country">
+        <br>
+        <label for="name">Income</label>
+        <input type="text" name="name" id="name" [(ngModel)]="store.monthlyIncome">
+        <br>
+        <label for="name">Owner name</label>
+        <input type="text" name="name" id="name" [(ngModel)]="store.ownerName">
+      </div>
+      <button type="submit" (click)="getAllStores">Create Store</button>
+    </form>
+  </div>
+
+  <div *ngIf="showUpdateStoreForm" class="updateform">
+    <h2> UPDATE FORM</h2>
+    <form (ngSubmit)="updateStore(storetemp)">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" [(ngModel)]="storetemp.name" [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+        <label for="name">City</label>
+        <input type="text" name="name" id="name" [(ngModel)]="storetemp.city" [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+        <label for="name">Country</label>
+        <input type="text" name="name" id="name" [(ngModel)]="storetemp.country" [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+        <label for="name">Monthly Income</label>
+        <input type="text" name="name" id="name" [(ngModel)]="storetemp.monthlyIncome" [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+        <label for="name">Owner Name</label>
+        <input type="text" name="name" id="name" [(ngModel)]="storetemp.ownerName" [ngModelOptions]=" 
+        {standalone: true}">
+        <br>
+      </div>
+      <button type="submit">Update</button>
+    </form>
+  </div>
+
+</div>
